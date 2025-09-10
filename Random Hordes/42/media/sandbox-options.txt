@@ -1,0 +1,65 @@
+VERSION = 1,
+
+option RandomHordes.MinimumQuantity
+{
+	type = integer,
+    min = 1,
+    max = 9999999,
+    default = 20,
+
+    page = RandomHordes,
+	translation = RandomHordes_MinimumQuantity,
+}
+
+option RandomHordes.MaximumQuantity
+{
+	type = integer,
+    min = 1,
+    max = 9999999,
+    default = 50,
+
+    page = RandomHordes,
+	translation = RandomHordes_MaximumQuantity,
+}
+
+option RandomHordes.Frequency
+{
+	type = integer,
+    min = 1,
+    max = 1000,
+    default = 10,
+
+    page = RandomHordes,
+	translation = RandomHordes_Frequency,
+}
+
+option RandomHordes.SpawnDistance
+{
+	type = integer,
+    min = 15,
+    max = 200,
+    default = 40,
+
+    page = RandomHordes,
+	translation = RandomHordes_SpawnDistance,
+}
+
+option RandomHordes.RareZombies
+{
+	type = string,
+    default = FiremanFullSuit/Ghillie/HazardSuit/Hunter/Police/PoliceRiot/PoliceState/Police_SWAT/Survivalist/Survivalist02/Survivalist02_Late/Survivalist02_Mid/Survivalist03/Survivalist03_Late/Survivalist03_Mid/Survivalist04/Survivalist04_Late/Survivalist04_Mid/Survivalist05/Survivalist05_Late/Survivalist05_Mid/Survivalist_Late/Survivalist_Mid,
+	
+    page = RandomHordes,
+    translation = RandomHordes_RareZombies,
+}
+
+option RandomHordes.RareZombiesChance
+{
+	type = integer,
+    min = 0,
+    max = 1000,
+    default = 50,
+
+    page = RandomHordes,
+	translation = RandomHordes_RareZombiesChance,
+}
