@@ -12,11 +12,6 @@ for item in rareZombiesListStr:gmatch("[^/]+") do
 	table.insert(rareZombiesList, item);
 end
 
--- Testando: imprime cada elemento
-for i, v in ipairs(rareZombiesList) do
-	print(i, v)
-end
-
 local function SpawnZombieToPlayer(player)
 	local square = player:getCurrentSquare();
 	local zLocationX = 0;
@@ -152,11 +147,21 @@ local function CheckZombiesToSpawn()
 			local player = getPlayer();
 			if (outgoingHordes[player:getUsername()] or 0) > 0 then
 				SpawnZombieToPlayer(player);
+			else
+				outgoingHordes[player:getUsername()] = nil
 			end
 		else
 			for playerUsername, zombiesRemaining in pairs(outgoingHordes) do
 				local player = getPlayerFromUsername(playerUsername);
-				SpawnZombieToPlayer(player);
+				if player then
+					if (outgoingHordes[playerUsername] or 0) > 0 then
+						SpawnZombieToPlayer(player);
+					else
+						outgoingHordes[playerUsername] = nil;
+					end
+				else
+					outgoingHordes[playerUsername] = nil;
+				end
 			end
 		end
 	end
