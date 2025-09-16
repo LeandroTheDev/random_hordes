@@ -68,6 +68,6 @@ option RandomHordes.ConsoleDebug
 {
 	type = boolean,
 	default = false,
-	page = Airdrop,
+	page = RandomHordes,
 	translation = RandomHordes_ConsoleDebug,
 }
