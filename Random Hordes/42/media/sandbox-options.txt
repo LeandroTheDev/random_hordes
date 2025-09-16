@@ -63,3 +63,11 @@ option RandomHordes.RareZombiesChance
     page = RandomHordes,
 	translation = RandomHordes_RareZombiesChance,
 }
+
+option RandomHordes.ConsoleDebug
+{
+	type = boolean,
+	default = false,
+	page = Airdrop,
+	translation = RandomHordes_ConsoleDebug,
+}

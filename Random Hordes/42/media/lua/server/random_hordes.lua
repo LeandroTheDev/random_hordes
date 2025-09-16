@@ -1,3 +1,6 @@
+local debug = getSandboxOptions():getOptionByName(
+	"RandomHordes.ConsoleDebug"):getValue();
+
 local tickBeforeNextZed = 10; -- Ticks to spawn a zed
 local actualTick = 0;         -- Actual server tick used with tickBeforeNextZed
 
@@ -39,26 +42,34 @@ local function SpawnZombieToPlayer(player)
 
 		local zombieSquare = getWorld():getCell():getGridSquare(zLocationX, zLocationY, 0);
 		if canSpawn and not zombieSquare then
-			DebugPrintRandomHorde(player:getUsername() ..
-				" cannot spawn zombie in X:" .. zLocationX .. " Y: " .. zLocationY .. ", not a valid square");
+			if debug then
+				DebugPrintRandomHorde(player:getUsername() ..
+					" cannot spawn zombie in X:" .. zLocationX .. " Y: " .. zLocationY .. ", not a valid square");
+			end
 			canSpawn = false;
 		end
 
 		if canSpawn and SafeHouse.getSafeHouse(zombieSquare) then
-			DebugPrintRandomHorde(player:getUsername() ..
-				" cannot spawn zombie in X:" .. zLocationX .. " Y: " .. zLocationY .. ", is a safehouse");
+			if debug then
+				DebugPrintRandomHorde(player:getUsername() ..
+					" cannot spawn zombie in X:" .. zLocationX .. " Y: " .. zLocationY .. ", is a safehouse");
+			end
 			canSpawn = false;
 		end
 
 		if canSpawn and not zombieSquare:isSafeToSpawn() then
-			DebugPrintRandomHorde(player:getUsername() ..
-				" cannot spawn zombie in X:" .. zLocationX .. " Y: " .. zLocationY .. ", is not safe to spawn");
+			if debug then
+				DebugPrintRandomHorde(player:getUsername() ..
+					" cannot spawn zombie in X:" .. zLocationX .. " Y: " .. zLocationY .. ", is not safe to spawn");
+			end
 			canSpawn = false;
 		end
 
 		if canSpawn and not zombieSquare:isOutside() then
-			DebugPrintRandomHorde(player:getUsername() ..
-				" cannot spawn zombie in X:" .. zLocationX .. " Y: " .. zLocationY .. ", is not outside");
+			if debug then
+				DebugPrintRandomHorde(player:getUsername() ..
+					" cannot spawn zombie in X:" .. zLocationX .. " Y: " .. zLocationY .. ", is not outside");
+			end
 			canSpawn = false;
 		end
 
@@ -70,20 +81,27 @@ local function SpawnZombieToPlayer(player)
 	outgoingHordes[player:getUsername()] = outgoingHordes[player:getUsername()] - 1;
 
 	if not canSpawn then
-		DebugPrintRandomHorde(player:getUsername() .. " ZOMBIE NOT SPAWNED!");
+		if debug then
+			DebugPrintRandomHorde(player:getUsername() .. " ZOMBIE NOT SPAWNED!");
+		end
 		return;
 	end
 
 	-- Rare Zombie Spawn
 	if ZombRand(0, 1000) <= getSandboxOptions():getOptionByName("RandomHordes.RareZombiesChance"):getValue() then
-		DebugPrintRandomHorde(player:getUsername() .. " RARE ZOMBIE SPAWNED! X: " .. zLocationX .. " Y: " .. zLocationY);
+		if debug then
+			DebugPrintRandomHorde(player:getUsername() ..
+				" RARE ZOMBIE SPAWNED! X: " .. zLocationX .. " Y: " .. zLocationY);
+		end
 
 		local outfit = rareZombiesList[ZombRand(0, #rareZombiesList) + 1];
 
 		addZombiesInOutfit(zLocationX, zLocationY, 0, 1, outfit, 50, false, false, false, false, false, false, 100, false,
 			0);
 	else -- Normal Zombie SPawn
-		DebugPrintRandomHorde(player:getUsername() .. " ZOMBIE SPAWNED! X: " .. zLocationX .. " Y: " .. zLocationY);
+		if debug then
+			DebugPrintRandomHorde(player:getUsername() .. " ZOMBIE SPAWNED! X: " .. zLocationX .. " Y: " .. zLocationY);
+		end
 		addZombiesInOutfit(zLocationX, zLocationY, 0, 1, nil, 50, false, false, false, false, false, false, 100, false,
 			0);
 	end
@@ -94,11 +112,12 @@ end
 local function CheckRandomHorde()
 	local chance = ZombRand(0, 1000) + 1;
 
-	DebugPrintRandomHorde("[CheckRandomHorde] " ..
-		getSandboxOptions():getOptionByName("RandomHordes.Frequency"):getValue() .. " >= " .. chance);
+	if debug then
+		DebugPrintRandomHorde("[CheckRandomHorde] " ..
+			getSandboxOptions():getOptionByName("RandomHordes.Frequency"):getValue() .. " >= " .. chance);
+	end
 
 	if getSandboxOptions():getOptionByName("RandomHordes.Frequency"):getValue() >= chance then
-		DebugPrintRandomHorde(chance .. ": HORDE SPAWNING!");
 		if RandomHordeIsSinglePlayer then
 			local player = getPlayer();
 
